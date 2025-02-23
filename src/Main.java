@@ -19,7 +19,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    addWorkout(scanner);
+                    addRoutine(scanner);
                     break;
                 case 2:
                     viewWorkouts();
@@ -34,22 +34,18 @@ public class Main {
         }
     }
 
-    private static void addWorkout(Scanner scanner) {
-        System.out.print("Enter workout name: ");
+    private static void addRoutine(Scanner scanner) {
+        System.out.print("Enter routine name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter workout type (Cardio, Strength, Flexibility, Other): ");
-        String type = scanner.nextLine();
-        System.out.print("Enter duration (minutes): ");
-        int duration = scanner.nextInt();
 
-        String sql = "INSERT INTO workouts (name, type, duration) VALUES (?, ?, ?)";
+        
+        String sql = "INSERT INTO routine (name, dateCreated) VALUES (?, NOW())";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, name);
-            stmt.setString(2, type);
-            stmt.setInt(3, duration);
+           
             stmt.executeUpdate();
             System.out.println("Workout added successfully!");
 

@@ -13,7 +13,7 @@ public class Database {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");  // Load MySQL Driver
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("MySQL Driver not found!", e);
+            throw new RuntimeException("MySQL Driver not2 found!", e);
         }
     }
 
