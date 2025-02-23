@@ -22,7 +22,7 @@ public class Main {
                     addWorkout(scanner);
                     break;
                 case 2:
-                    viewWorkouts();
+                    viewRoutines();
                     break;
                 case 3:
                     System.out.println("Goodbye!");
@@ -58,8 +58,8 @@ public class Main {
         }
     }
 
-    private static void viewWorkouts() {
-        String sql = "SELECT * FROM workouts";
+    private static void viewRoutines() {
+        String sql = "SELECT * FROM routine";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -67,9 +67,8 @@ public class Main {
 
             while (rs.next()) {
                 System.out.println("ID: " + rs.getInt("id") +
-                        ", Name: " + rs.getString("name") +
-                        ", Type: " + rs.getString("type") +
-                        ", Duration: " + rs.getInt("duration") + " min");
+                        ", Nom: " + rs.getString("name") +
+                        ", Date de création: " + rs.getDate("dateCreated"));
             }
 
         } catch (SQLException e) {
