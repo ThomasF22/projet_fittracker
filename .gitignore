@@ -1,0 +1,17 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+.mvn/
+
+# IDE-specific files (like VS Code, IntelliJ, etc.)
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
