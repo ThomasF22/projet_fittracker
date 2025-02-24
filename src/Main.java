@@ -14,7 +14,8 @@ public class Main {
             System.out.println("2. View Workouts");
             System.out.println("3. View Exercises in a Routine");
             System.out.println("4. Add Exercise to a Routine");
-            System.out.println("5. Exit");
+            System.out.println("5. Do a Workout Session");
+            System.out.println("6. Exit");
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -33,6 +34,9 @@ public class Main {
                     addExerciseToRoutine(scanner);
                     break;
                 case 5:
+                    doWorkoutSession(scanner);
+                    break;
+                case 6:
                     System.out.println("Goodbye!");
                     scanner.close();
                     return;
@@ -165,6 +169,91 @@ public class Main {
                         ", Weight: " + rs.getDouble("weight") +
                         ", Duration: " + rs.getInt("duration") +
                         " seconds, Reps: " + rs.getInt("reps"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Nouvelle méthode pour faire une séance
+    private static void doWorkoutSession(Scanner scanner) {
+        System.out.println("Available routines:");
+        viewRoutines(); // Affiche toutes les routines disponibles
+
+        System.out.print("Enter the ID of the routine you want to do: ");
+        int routineId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        // Afficher les exercices associés à la routine sélectionnée
+        String sql = "SELECT e.id, e.name, re.weight, re.duration, re.reps " +
+                     "FROM exercise e " +
+                     "JOIN routine_ex re ON e.id = re.idExercise " +
+                     "WHERE re.idRoutine = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, routineId);
+            ResultSet rs = stmt.executeQuery();
+
+            System.out.println("Start your workout session:");
+
+            // Parcourir chaque exercice et demander à l'utilisateur de saisir les données
+            while (rs.next()) {
+                System.out.println("Exercise: " + rs.getString("name"));
+
+                // Demander à l'utilisateur de saisir les informations de la séance
+                System.out.print("Enter weight (kg) or press Enter to skip: ");
+                String weightInput = scanner.nextLine();
+                Double weight = weightInput.isEmpty() ? null : Double.parseDouble(weightInput);
+
+                System.out.print("Enter duration (seconds) or press Enter to skip: ");
+                String durationInput = scanner.nextLine();
+                Integer duration = durationInput.isEmpty() ? null : Integer.parseInt(durationInput);
+
+                System.out.print("Enter repetitions or press Enter to skip: ");
+                String repsInput = scanner.nextLine();
+                Integer reps = repsInput.isEmpty() ? null : Integer.parseInt(repsInput);
+
+                // Mettre à jour la table `routine_ex` avec les données de la séance
+                String updateSql = "UPDATE routine_ex SET weight = ?, duration = ?, reps = ? " +
+                                   "WHERE idRoutine = ? AND idExercise = ?";
+
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setObject(1, weight);
+                    updateStmt.setObject(2, duration);
+                    updateStmt.setObject(3, reps);
+                    updateStmt.setInt(4, routineId);
+                    updateStmt.setInt(5, rs.getInt("id"));
+
+                    updateStmt.executeUpdate();
+                    System.out.println("Exercise completed!");
+                }
+            }
+
+            System.out.println("Workout session completed!");
+
+            // Afficher les exercices réalisés avec les données renseignées
+            System.out.println("\nYour completed workout session:");
+            String completedSql = "SELECT e.name, re.weight, re.duration, re.reps " +
+                                  "FROM exercise e " +
+                                  "JOIN routine_ex re ON e.id = re.idExercise " +
+                                  "WHERE re.idRoutine = ?";
+
+            try (PreparedStatement completedStmt = conn.prepareStatement(completedSql)) {
+                completedStmt.setInt(1, routineId);
+                ResultSet completedRs = completedStmt.executeQuery();
+
+                while (completedRs.next()) {
+                    System.out.println("- " + completedRs.getString("name") +
+                            ", Weight: " + completedRs.getDouble("weight") +
+                            ", Duration: " + completedRs.getInt("duration") +
+                            " seconds, Reps: " + completedRs.getInt("reps"));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
         } catch (SQLException e) {
