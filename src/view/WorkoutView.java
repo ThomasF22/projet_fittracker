@@ -38,20 +38,21 @@ public class WorkoutView {
 
     public static Double getWeightInput() {
         System.out.print("Enter weight (kg) or press Enter to skip: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().trim(); // Assure que seule la ligne entière est lue
         return input.isEmpty() ? null : Double.parseDouble(input);
     }
     
     public static Integer getDurationInput() {
         System.out.print("Enter duration (seconds) or press Enter to skip: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().trim();
         return input.isEmpty() ? null : Integer.parseInt(input);
     }
     
     public static Integer getRepsInput() {
         System.out.print("Enter repetitions or press Enter to skip: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().trim();
         return input.isEmpty() ? null : Integer.parseInt(input);
     }
+    
     
 }
