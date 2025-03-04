@@ -10,8 +10,9 @@ public class WorkoutView {
         System.out.println("2. View Routines");
         System.out.println("3. View Exercises in a Routine");
         System.out.println("4. Add Exercise to a Routine");
-        System.out.println("5. Start a Routine");
-        System.out.println("6. Exit");
+        System.out.println("5. Remove Exercise from a Routine");
+        System.out.println("6. Start a Routine");
+        System.out.println("7. Exit");
         System.out.print("Enter choice: ");
         return scanner.nextInt();
     }

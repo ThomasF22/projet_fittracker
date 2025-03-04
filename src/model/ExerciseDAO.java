@@ -38,6 +38,22 @@ public class ExerciseDAO {
         }
     }
 
+    public static void removeExerciseFromRoutine(int routineId, int exerciseId){
+        String sql = "DELETE FROM routine_ex WHERE routine_ex.idRoutine = ? AND routine_ex.idExercise = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, routineId);
+            stmt.setInt(2, exerciseId);
+            stmt.executeUpdate();
+
+            System.out.println("Exercise removed from routine successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<Exercise> getExercisesByRoutine(int routineId) {
         List<Exercise> exercises = new ArrayList<>();
         String sql = "SELECT e.id, e.name, re.weight, re.duration, re.reps " +

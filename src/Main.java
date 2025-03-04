@@ -21,11 +21,13 @@ public class Main {
                 case 4:
                     WorkoutController.addExerciseToRoutine();
                     break;
-
                 case 5:
-                    WorkoutController.doWorkoutSession();
+                    WorkoutController.removeExerciseFromRoutine();
                     break;
                 case 6:
+                    WorkoutController.doWorkoutSession();
+                    break;
+                case 7:
                     System.out.println("Goodbye!");
                     return;
                 default:

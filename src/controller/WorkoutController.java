@@ -56,6 +56,19 @@ public class WorkoutController {
         ExerciseDAO.addExerciseToRoutine(routineId, exerciseId);
     }
 
+    public static void removeExerciseFromRoutine(){
+        viewRoutines();
+        int routineId = WorkoutView.getRoutineId();
+
+        List<Exercise> exercises = ExerciseDAO.getExercisesByRoutine(routineId);
+        for (Exercise exercise : exercises) {
+            System.out.println("ID: " + exercise.getId() + ", Name: " + exercise.getName());
+        }
+        
+        int exerciseId = WorkoutView.getExerciseId();
+        ExerciseDAO.removeExerciseFromRoutine(routineId, exerciseId);
+    }
+
     public static void doWorkoutSession() {
         System.out.println("\n=== Start Workout Session ===");
         viewRoutines(); // Display available routines
