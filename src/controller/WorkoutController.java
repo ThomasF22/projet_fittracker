@@ -47,7 +47,7 @@ public class WorkoutController {
         viewRoutines();
         int routineId = WorkoutView.getRoutineId();
         
-        List<Exercise> exercises = ExerciseDAO.getExercisesByRoutine(routineId);
+        List<Exercise> exercises = ExerciseDAO.getAllExercises();
         for (Exercise exercise : exercises) {
             System.out.println("ID: " + exercise.getId() + ", Name: " + exercise.getName());
         }

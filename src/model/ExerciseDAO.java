@@ -14,8 +14,7 @@ public class ExerciseDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                exercises.add(new Exercise(rs.getInt("id"), rs.getString("name"),
-                rs.getDouble("weight"), rs.getInt("duration"),rs.getInt("reps")));
+                exercises.add(new Exercise(rs.getInt("id"), rs.getString("name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
