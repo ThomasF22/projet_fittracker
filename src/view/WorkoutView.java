@@ -7,12 +7,13 @@ public class WorkoutView {
     public static int showMenu() {
         System.out.println("\nWorkout Routine Manager");
         System.out.println("1. Add Workout Routine");
-        System.out.println("2. View Routines");
-        System.out.println("3. View Exercises in a Routine");
-        System.out.println("4. Add Exercise to a Routine");
-        System.out.println("5. Remove Exercise from a Routine");
-        System.out.println("6. Start a Routine");
-        System.out.println("7. Exit");
+        System.out.println("2. Remove Workout Routine");
+        System.out.println("3. View Routines");
+        System.out.println("4. View Exercises in a Routine");
+        System.out.println("5. Add Exercise to a Routine");
+        System.out.println("6. Remove Exercise from a Routine");
+        System.out.println("7. Start a Routine");
+        System.out.println("8. Exit");
         System.out.print("Enter choice: ");
         return scanner.nextInt();
     }

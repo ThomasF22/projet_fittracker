@@ -36,4 +36,19 @@ public class RoutineDAO {
             e.printStackTrace();
         }
     }
+
+    public static void removeRoutine(int routineId) {
+        String sql = "DELETE FROM routine WHERE routine.id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, routineId);
+            stmt.executeUpdate();
+
+            System.out.println("Workout routine removed successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

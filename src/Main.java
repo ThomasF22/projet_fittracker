@@ -12,22 +12,25 @@ public class Main {
                     WorkoutController.addRoutine();
                     break;
                 case 2:
-                    WorkoutController.viewRoutines();
+                    WorkoutController.removeRoutine();
                     break;
                 case 3:
+                    WorkoutController.viewRoutines();
+                    break;
+                case 4:
                     WorkoutController.viewRoutineExercises();
                     break;
             
-                case 4:
+                case 5:
                     WorkoutController.addExerciseToRoutine();
                     break;
-                case 5:
+                case 6:
                     WorkoutController.removeExerciseFromRoutine();
                     break;
-                case 6:
+                case 7:
                     WorkoutController.doWorkoutSession();
                     break;
-                case 7:
+                case 8:
                     System.out.println("Goodbye!");
                     return;
                 default:

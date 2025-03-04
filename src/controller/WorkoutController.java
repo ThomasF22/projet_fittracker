@@ -9,6 +9,12 @@ public class WorkoutController {
         RoutineDAO.addRoutine(name);
     }
 
+    public static void removeRoutine(){
+        viewRoutines();
+        int routineId = WorkoutView.getRoutineId();
+        RoutineDAO.removeRoutine(routineId);
+    }
+
     public static void viewRoutines() {
         List<Routine> routines = RoutineDAO.getAllRoutines();
         for (Routine routine : routines) {
