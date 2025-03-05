@@ -1,4 +1,4 @@
-package src.model;
+package com.fittracker.model;
 import java.util.Date;
 
 public class Routine {

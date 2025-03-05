@@ -1,7 +1,7 @@
-package src;
+package com.fittracker;
 
-import src.controller.WorkoutController;
-import src.view.WorkoutView;
+import com.fittracker.controller.WorkoutController;
+import com.fittracker.view.WorkoutView;
 
 public class Main {
     public static void main(String[] args) {

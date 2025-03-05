@@ -1,4 +1,4 @@
-package src.database;
+package com.fittracker.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

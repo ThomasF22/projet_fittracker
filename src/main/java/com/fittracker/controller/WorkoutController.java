@@ -1,7 +1,8 @@
-package src.controller;
-import src.model.*;
-import src.view.WorkoutView;
+package com.fittracker.controller;
 import java.util.List;
+
+import com.fittracker.model.*;
+import com.fittracker.view.WorkoutView;
 
 public class WorkoutController {
     public static void addRoutine() {

@@ -1,8 +1,9 @@
-package src.model;
-import src.database.Database;
+package com.fittracker.model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fittracker.config.Database;
 
 public class ExerciseDAO {
     public static List<Exercise> getAllExercises() {

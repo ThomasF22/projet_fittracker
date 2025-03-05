@@ -1,4 +1,4 @@
-package src.model;
+package com.fittracker.model;
 
 public class Exercise {
     private int id;
