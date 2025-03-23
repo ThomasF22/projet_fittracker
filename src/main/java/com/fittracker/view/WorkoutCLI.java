@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 import com.fittracker.controller.WorkoutController;
 import com.fittracker.model.Exercise;
+import com.fittracker.model.ExerciseDAO;
 import com.fittracker.model.Routine;
 
 public class WorkoutCLI {
@@ -16,13 +17,13 @@ public class WorkoutCLI {
         while (true) {
             int choice = showMenu();
             switch (choice) {
-                case 1 -> WorkoutController.addRoutine();
-                case 2 -> deleteRoutine();
+                case 1 -> addRoutine();
+                case 2 -> deleteRoutine(); 
                 case 3 -> showRoutines();
-                case 4 -> showExercisesInRoutine();
-                case 5 -> WorkoutController.addExerciseToRoutine(scanner);
-                case 6 -> WorkoutController.removeExerciseFromRoutine(scanner);
-                case 7 -> WorkoutController.doWorkoutSession(scanner);
+                case 4 -> showExercisesInRoutine(getRoutineId());
+                case 5 -> addExerciseToRoutine(); // idem
+                case 6 -> removeExerciseFromRoutine();
+                // case 7 -> WorkoutController.doWorkoutSession(scanner);
                 case 8 -> {
                     System.out.println("Goodbye!");
                     scanner.close();
@@ -46,6 +47,19 @@ public class WorkoutCLI {
         System.out.print("Enter choice: ");
         return scanner.nextInt();
     }
+
+    public void addRoutine(){
+        System.out.println("Entrez le nom de la Routine:");
+        String routineName = getRoutineName();
+        if(WorkoutController.addRoutine(routineName)){
+            System.out.println("Routine ajoutée!");
+        }
+        else{
+            System.out.println("Erreur, routine pas ajoutée!");
+        }; 
+
+    }
+
     public void showRoutines() {
     List<Routine> routines = WorkoutController.getRoutines();  // Fetch from controller
     if (routines.isEmpty()) {
@@ -56,12 +70,10 @@ public class WorkoutCLI {
             System.out.println("ID: " + routine.getId() + ", Name: " + routine.getName() + ", Created: " + routine.getDateCreated());
         }
     }
-}
+    }
 
-    public void showExercisesInRoutine() {
+    public void showExercisesInRoutine(int routineId) {
         showRoutines(); // Show available routines first
-
-        int routineId = getRoutineId();
         List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
 
         if (exercises.isEmpty()) {
@@ -77,6 +89,46 @@ public class WorkoutCLI {
         }
     }
 
+    public void addExerciseToRoutine(){
+        showRoutines();
+        int routineId = getRoutineId();
+        List<Exercise> exercises = ExerciseDAO.getAllExercises();
+        if (exercises.isEmpty()){
+            System.out.println("Pas d'exercises dans la base de données!");
+        }
+
+        else {
+            System.out.println("\n Exercice : \n");
+            for (Exercise exercise : exercises){
+              System.out.println("\nID : " + exercise.getId() + ", Nom : " + exercise.getName());
+            }
+            System.out.println("\n Veuillez choisir l'ID de l'exercise à rajouter.");
+            }
+        int exerciseId = getExerciseId();
+        
+        if (WorkoutController.addExerciseToRoutine(routineId, exerciseId)){
+            System.out.println("Exercice ajouté!");
+        }
+        else {
+            System.out.println("Erreur bro!!");
+        }
+        }
+
+
+    public void removeExerciseFromRoutine(){
+        showRoutines();
+        int routineId = getRoutineId();
+        showExercisesInRoutine(routineId);
+        System.out.println("\nEntrez l'ID de la routine");
+        int exerciseId = getExerciseId();
+        if (WorkoutController.removeExerciseFromRoutine(routineId, exerciseId)){
+            System.out.println("\n Exercice supprimé de la routine!");
+        }
+        else{
+            System.out.println("Erreur!");
+        }
+    }
+
     public void deleteRoutine() {
         showRoutines();
         int routineId = getRoutineId();
@@ -87,11 +139,6 @@ public class WorkoutCLI {
         } else {
             System.out.println("Failed to remove routine.");
         }
-    }
-
-    public void addRoutine(){
-        System.out.println("Entrez le nom de la Routine:");
-        
     }
     
 

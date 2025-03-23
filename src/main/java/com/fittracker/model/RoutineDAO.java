@@ -54,4 +54,36 @@ public class RoutineDAO {
         }
                 return false;
     }
+
+    public static boolean addExerciseToRoutine(int routineId, int exerciseId) {
+        String sql = "INSERT INTO routine_ex (idRoutine, idExercise) VALUES (?, ?)";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, routineId);
+            stmt.setInt(2, exerciseId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean removeExerciseFromRoutine(int routineId, int exerciseId){
+        String sql = "DELETE FROM routine_ex WHERE routine_ex.idRoutine = ? AND routine_ex.idExercise = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, routineId);
+            stmt.setInt(2, exerciseId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
