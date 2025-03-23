@@ -23,33 +23,35 @@ public class RoutineDAO {
         return routines;
     }
 
-    public static void addRoutine(String name) {
+    public static boolean addRoutine(String name) {
         String sql = "INSERT INTO routine (name, dateCreated) VALUES (?, NOW())";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, name);
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
 
-            System.out.println("Workout routine added successfully!");
+            return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public static void removeRoutine(int routineId) {
+    public static boolean removeRoutine(int routineId) {
         String sql = "DELETE FROM routine WHERE routine.id = ?";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, routineId);
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
 
-            System.out.println("Workout routine removed successfully!");
+            return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+                return false;
     }
 }

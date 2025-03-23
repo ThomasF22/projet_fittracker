@@ -1,34 +1,42 @@
 package com.fittracker.controller;
 import java.util.List;
+import java.util.Scanner;
 
 import com.fittracker.model.*;
-import com.fittracker.view.WorkoutView;
+import com.fittracker.view.WorkoutCLI;
 
 public class WorkoutController {
-    public static void addRoutine() {
-        String name = WorkoutView.getRoutineName();
-        RoutineDAO.addRoutine(name);
+    public static void addRoutine(String name) {
+       return RoutineDAO.addRoutine(name);
     }
 
-    public static void removeRoutine(){
-        viewRoutines();
-        int routineId = WorkoutView.getRoutineId();
-        RoutineDAO.removeRoutine(routineId);
+    public static boolean removeRoutine(int routineId){
+        return RoutineDAO.removeRoutine(routineId);
     }
 
-    public static void viewRoutines() {
-        List<Routine> routines = RoutineDAO.getAllRoutines();
-        for (Routine routine : routines) {
-            System.out.println("ID: " + routine.getId() + ", Name: " + routine.getName() + ", Created: " + routine.getDateCreated());
-        }
+    public static List<Routine> getRoutines() {
+        return RoutineDAO.getAllRoutines();
+        // List<Routine> routines = RoutineDAO.getAllRoutines();
+        // for (Routine routine : routines) {
+        //     System.out.println("ID: " + routine.getId() + ", Name: " + routine.getName() + ", Created: " + routine.getDateCreated());
+        // }
+
+        
     }
 
-    public static void viewRoutineExercises() {
+
+    public static List<Exercise> getExercisesInRoutine(int routineId) {
+        return ExerciseDAO.getExercisesByRoutine(routineId);
+    }
+    
+
+
+    public static void viewRoutineExercises(Scanner scanner) {
         System.out.println("\n=== View Exercises in Routine ===");
-        viewRoutines(); // Show available routines
+        viewRoutines(scanner); // Show available routines
     
         // Get the routine ID from the user
-        int routineId = WorkoutView.getRoutineId(); 
+        int routineId = WorkoutCLI.getRoutineId(scanner); 
     
         // Fetch exercises for the selected routine
         List<Exercise> exercises = ExerciseDAO.getExercisesByRoutine(routineId);
@@ -50,38 +58,38 @@ public class WorkoutController {
     
     
 
-    public static void addExerciseToRoutine() {
-        viewRoutines();
-        int routineId = WorkoutView.getRoutineId();
+    public static void addExerciseToRoutine(Scanner scanner) {
+        viewRoutines(scanner);
+        int routineId = WorkoutCLI.getRoutineId(scanner);
         
         List<Exercise> exercises = ExerciseDAO.getAllExercises();
         for (Exercise exercise : exercises) {
             System.out.println("ID: " + exercise.getId() + ", Name: " + exercise.getName());
         }
 
-        int exerciseId = WorkoutView.getExerciseId();
+        int exerciseId = WorkoutCLI.getExerciseId(scanner);
         ExerciseDAO.addExerciseToRoutine(routineId, exerciseId);
     }
 
-    public static void removeExerciseFromRoutine(){
-        viewRoutines();
-        int routineId = WorkoutView.getRoutineId();
+    public static void removeExerciseFromRoutine(Scanner scanner){
+        viewRoutines(scanner);
+        int routineId = WorkoutCLI.getRoutineId(scanner);
 
         List<Exercise> exercises = ExerciseDAO.getExercisesByRoutine(routineId);
         for (Exercise exercise : exercises) {
             System.out.println("ID: " + exercise.getId() + ", Name: " + exercise.getName());
         }
         
-        int exerciseId = WorkoutView.getExerciseId();
+        int exerciseId = WorkoutCLI.getExerciseId(scanner);
         ExerciseDAO.removeExerciseFromRoutine(routineId, exerciseId);
     }
 
-    public static void doWorkoutSession() {
+    public static void doWorkoutSession(Scanner scanner) {
         System.out.println("\n=== Start Workout Session ===");
-        viewRoutines(); // Display available routines
+        viewRoutines(scanner); // Display available routines
     
         // Get the routine ID from the user
-        int routineId = WorkoutView.getRoutineId(); 
+        int routineId = WorkoutCLI.getRoutineId(scanner); 
     
         // Fetch exercises for the selected routine
         List<Exercise> exercises = ExerciseDAO.getExercisesByRoutine(routineId);
@@ -96,9 +104,9 @@ public class WorkoutController {
                 System.out.println("Exercise: " + exercise.getName());
     
                 // Ask user for input for weight, duration, and reps (can be skipped)
-                Double weight = WorkoutView.getWeightInput();
-                Integer duration = WorkoutView.getDurationInput();
-                Integer reps = WorkoutView.getRepsInput();
+                Double weight = WorkoutCLI.getWeightInput(scanner);
+                Integer duration = WorkoutCLI.getDurationInput(scanner);
+                Integer reps = WorkoutCLI.getRepsInput(scanner);
     
                 // Update the exercise details for the routine in the database
                 ExerciseDAO.updateExerciseDetails(routineId, exercise.getId(), weight, duration, reps);
