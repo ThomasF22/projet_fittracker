@@ -82,7 +82,11 @@ public class WorkoutCLI {
         } else {
             System.out.println("\nExercises in Routine ID " + routineId + ":");
             for (Exercise exercise : exercises) {
-                System.out.println("\nID : " + exercise.getId() + " Nom : " + exercise.getName());
+                System.out.println("\nID : " + exercise.getId() +
+                 " Nom : " + exercise.getName() +
+                 " | Poids : " + exercise.getWeight() + 
+                 " | Durée :  " + exercise.getDuration() +
+                 " | Répétitions : " + exercise.getReps() +" | \n");
 
             }
         }
