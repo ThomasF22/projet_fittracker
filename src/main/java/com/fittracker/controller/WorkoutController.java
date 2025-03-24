@@ -6,6 +6,10 @@ import com.fittracker.model.*;
 import com.fittracker.view.WorkoutCLI;
 
 public class WorkoutController {
+
+    public static List<Exercise> getAllExercises(){
+        return ExerciseDAO.getAllExercises();
+    }
     public static boolean addRoutine(String name) {
        return RoutineDAO.addRoutine(name);
     }

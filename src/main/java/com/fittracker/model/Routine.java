@@ -15,4 +15,9 @@ public class Routine {
     public int getId() { return id; }
     public String getName() { return name; }
     public Date getDateCreated() { return dateCreated; }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

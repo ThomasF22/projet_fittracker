@@ -11,9 +11,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        WorkoutCLI workoutCLI = new WorkoutCLI(scanner);
 
         if (mode == AppMode.CLI) {
+            WorkoutCLI workoutCLI = new WorkoutCLI(scanner);
             workoutCLI.run();
         }
         else {

@@ -26,5 +26,10 @@ public class Exercise {
     public double getWeight() { return weight; }
     public int getDuration() { return duration; }
     public int getReps() { return reps; }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }
 
