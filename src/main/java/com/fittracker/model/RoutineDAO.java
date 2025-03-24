@@ -86,4 +86,25 @@ public class RoutineDAO {
         }
         return false;
     }
+
+    public static boolean updateExerciseDetails(int routineId, int exerciseId, Double weight, Integer duration, Integer reps) {
+        String sql = "UPDATE routine_ex SET weight = ?, duration = ?, reps = ? WHERE idRoutine = ? AND idExercise = ?";
+    
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setObject(1, weight);
+            stmt.setObject(2, duration);
+            stmt.setObject(3, reps);
+            stmt.setInt(4, routineId);
+            stmt.setInt(5, exerciseId);
+    
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
 }

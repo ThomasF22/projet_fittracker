@@ -20,10 +20,10 @@ public class WorkoutCLI {
                 case 1 -> addRoutine();
                 case 2 -> deleteRoutine(); 
                 case 3 -> showRoutines();
-                case 4 -> showExercisesInRoutine(getRoutineId());
-                case 5 -> addExerciseToRoutine(); // idem
+                case 4 -> showExercisesInRoutine();
+                case 5 -> addExerciseToRoutine();
                 case 6 -> removeExerciseFromRoutine();
-                // case 7 -> WorkoutController.doWorkoutSession(scanner);
+                case 7 -> doWorkoutSession();
                 case 8 -> {
                     System.out.println("Goodbye!");
                     scanner.close();
@@ -72,8 +72,9 @@ public class WorkoutCLI {
     }
     }
 
-    public void showExercisesInRoutine(int routineId) {
+    public void showExercisesInRoutine() {
         showRoutines(); // Show available routines first
+        int routineId = getRoutineId();
         List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
 
         if (exercises.isEmpty()) {
@@ -81,12 +82,26 @@ public class WorkoutCLI {
         } else {
             System.out.println("\nExercises in Routine ID " + routineId + ":");
             for (Exercise exercise : exercises) {
-                System.out.println("- " + exercise.getName() + 
-                                ", Weight: " + exercise.getWeight() + 
-                                "kg, Duration: " + exercise.getDuration() + 
-                                "s, Reps: " + exercise.getReps());
+                System.out.println("\nID : " + exercise.getId() + " Nom : " + exercise.getName());
+
             }
         }
+
+    }
+
+    public void showExercisesInRoutineById(int routineId) {
+        List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+
+        if (exercises.isEmpty()) {
+            System.out.println("No exercises found for this routine.");
+        } else {
+            System.out.println("\nExercises in Routine ID " + routineId + ":");
+            for (Exercise exercise : exercises) {
+                System.out.println("\nID : " + exercise.getId() + " Nom : " + exercise.getName());
+
+            }
+        }
+
     }
 
     public void addExerciseToRoutine(){
@@ -118,7 +133,7 @@ public class WorkoutCLI {
     public void removeExerciseFromRoutine(){
         showRoutines();
         int routineId = getRoutineId();
-        showExercisesInRoutine(routineId);
+        showExercisesInRoutineById(routineId);
         System.out.println("\nEntrez l'ID de la routine");
         int exerciseId = getExerciseId();
         if (WorkoutController.removeExerciseFromRoutine(routineId, exerciseId)){
@@ -141,6 +156,22 @@ public class WorkoutCLI {
         }
     }
     
+    public void doWorkoutSession(){
+        showRoutines();
+        System.out.println("Veuillez entrer l'ID de la routine.");
+        int routineId = getRoutineId();
+
+        System.out.println("\n===Démarrage de la séance===");
+        List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        for (Exercise exercise : exercises){
+            System.out.println("Exercise : " + exercise.getName());
+            double weight = getWeightInput();
+            int duration = getDurationInput();
+            int reps = getRepsInput();
+            WorkoutController.updateExerciseDetails(routineId, exercise.getId(), weight, duration, reps);
+
+        }
+    }
 
 
 
@@ -152,12 +183,16 @@ public class WorkoutCLI {
 
     public int getRoutineId() {
         System.out.print("Enter routine ID: ");
-        return scanner.nextInt();
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        return id;
     }
 
     public int getExerciseId() {
         System.out.print("Enter exercise ID: ");
-        return scanner.nextInt();
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        return id;
     }
 
     public static void printMessage(String message) {
@@ -167,19 +202,19 @@ public class WorkoutCLI {
     public Double getWeightInput() {
         System.out.print("Enter weight (kg) or press Enter to skip: ");
         String input = scanner.nextLine().trim(); // Assure que seule la ligne entière est lue
-        return input.isEmpty() ? null : Double.parseDouble(input);
+        return input.isEmpty() ? 0.0 : Double.parseDouble(input);
     }
     
     public Integer getDurationInput() {
         System.out.print("Enter duration (seconds) or press Enter to skip: ");
         String input = scanner.nextLine().trim();
-        return input.isEmpty() ? null : Integer.parseInt(input);
+        return input.isEmpty() ? 0 : Integer.parseInt(input);
     }
     
     public Integer getRepsInput() {
         System.out.print("Enter repetitions or press Enter to skip: ");
         String input = scanner.nextLine().trim();
-        return input.isEmpty() ? null : Integer.parseInt(input);
+        return input.isEmpty() ? 0 : Integer.parseInt(input);
     }
     
     

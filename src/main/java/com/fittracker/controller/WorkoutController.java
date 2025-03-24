@@ -37,6 +37,9 @@ public class WorkoutController {
         return RoutineDAO.removeExerciseFromRoutine(routineId, exerciseId);
     }
 
+    public static boolean updateExerciseDetails(int routineId, int exerciseId, double weight, int duration, int reps){
+        return RoutineDAO.updateExerciseDetails(routineId, exerciseId, weight, duration, reps);
+    }
 
     // public static void viewRoutineExercises(Scanner scanner) {
     //     System.out.println("\n=== View Exercises in Routine ===");
