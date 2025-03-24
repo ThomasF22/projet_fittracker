@@ -7,7 +7,7 @@ import com.fittracker.view.WorkoutCLI;
 import com.fittracker.view.WorkoutGUI;
 
 public class Main {
-    private static final AppMode mode = AppMode.CLI; // Can be changed to CLI or GUI
+    private static final AppMode mode = AppMode.GUI; // Can be changed to CLI or GUI
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
