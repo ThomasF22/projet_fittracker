@@ -29,20 +29,20 @@ public class WorkoutController {
     }
 
 
-    public static List<Exercise> getExercisesInRoutine(int routineId) {
-        return ExerciseDAO.getExercisesByRoutine(routineId);
+    public static List<RoutineExercise> getExercisesInRoutine(int routineId) {
+        return RoutineExerciseDAO.getRoutineExercisesById(routineId);
     }
 
     public static boolean addExerciseToRoutine(int routineId, int exerciseId){
-        return RoutineDAO.addExerciseToRoutine(routineId, exerciseId);
+        return RoutineExerciseDAO.addExerciseToRoutine(routineId, exerciseId);
     }
     
     public static boolean removeExerciseFromRoutine(int routineId, int exerciseId){
-        return RoutineDAO.removeExerciseFromRoutine(routineId, exerciseId);
+        return RoutineExerciseDAO.removeExerciseFromRoutine(routineId, exerciseId);
     }
 
     public static boolean updateExerciseDetails(int routineId, int exerciseId, double weight, int duration, int reps){
-        return RoutineDAO.updateExerciseDetails(routineId, exerciseId, weight, duration, reps);
+        return RoutineExerciseDAO.updateExerciseDetails(routineId, exerciseId, weight, duration, reps);
     }
 
     // public static void viewRoutineExercises(Scanner scanner) {

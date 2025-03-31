@@ -8,7 +8,7 @@
     <Text text="Workout Routine Manager" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
     
     <Button text="Voir les routines" onAction="#goToShowRoutines" />
-    <Button text="Ajouter un exercice à une routine" onAction="#goToAddExercise" />
-    <Button text="Démarrer une séance" onAction="#goToWorkoutSession" />
+    <!-- <Button text="Ajouter un exercice à une routine" onAction="#goToAddExercise" /> -->
+    <!-- <Button text="Démarrer une séance" onAction="#goToWorkoutSession" /> -->
     <Button text="Quitter" onAction="#exitApp" />
 </VBox>

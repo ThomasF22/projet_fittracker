@@ -1,6 +1,7 @@
 package com.fittracker.controller;
 
 import com.fittracker.model.Exercise;
+import com.fittracker.model.RoutineExercise;
 import com.fittracker.model.Routine;
 import com.fittracker.model.RoutineDAO;
 import com.fittracker.controller.WorkoutController;
@@ -30,10 +31,10 @@ public class RoutineListController {
     @FXML
     private Label exerciseNameLabel;
     @FXML
-    private ListView<Exercise> exerciseListView;
+    private ListView<RoutineExercise> exerciseListView;
 
     private ObservableList<Routine> routineList;
-    private ObservableList<Exercise> exerciseList; 
+    private ObservableList<RoutineExercise> exerciseList; 
 
     @FXML
     public void initialize() {
@@ -62,19 +63,26 @@ public class RoutineListController {
 
     // Load exercises for the selected routine
     private void loadExercises(Routine selectedRoutine) {
-        List<Exercise> exercises = WorkoutController.getExercisesInRoutine(selectedRoutine.getId());
+        // Sauvegarde de l'exercise avant MAJ de la liste
+        RoutineExercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
+        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(selectedRoutine.getId());
         exerciseList = FXCollections.observableArrayList(exercises);
         exerciseListView.setItems(exerciseList);
+
+        // Restauration de l'exercise après MAJ de la liste
+        if (selectedExercise != null && exercises.contains(selectedExercise)) {
+            exerciseListView.getSelectionModel().select(selectedExercise);
+        }
     }
     @FXML
     private void handleExerciseSelection() {
         Routine selectedRoutine = routineListView.getSelectionModel().getSelectedItem();
-        Exercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
+        RoutineExercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
         if (selectedExercise != null) {
             exerciseIdLabel.setText(String.valueOf(selectedExercise.getId()));
-            exerciseNameLabel.setText(selectedExercise.getName().toString());
+            exerciseNameLabel.setText(selectedExercise.toString());
             
-            loadExercises(selectedRoutine);
+            // loadExercises(selectedRoutine);
         }
     }
 
@@ -119,7 +127,7 @@ public class RoutineListController {
     @FXML
     private void deleteExercise() {
         Routine selectedRoutine = routineListView.getSelectionModel().getSelectedItem();
-        Exercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
+        RoutineExercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
         if (selectedExercise == null) {
             showAlert("Erreur", "Veuillez sélectionner un exercice à supprimer.", Alert.AlertType.ERROR);
             return;
