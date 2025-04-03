@@ -6,8 +6,17 @@ import com.fittracker.model.Exercise;
 import com.fittracker.model.ExerciseDAO;
 import com.fittracker.model.Routine;
 import com.fittracker.model.RoutineExercise;
+import com.service.ExerciseService;
+import com.service.RoutineExerciseService;
+import com.service.RoutineService;
 
 public class WorkoutCLI {
+    private ExerciseService exerciseService = new ExerciseService();
+    private RoutineService routineService = new RoutineService();
+    private RoutineExerciseService routineExerciseService = new RoutineExerciseService();
+
+    private Routine routine = new Routine();
+
     private Scanner scanner;
 
     public WorkoutCLI(Scanner scanner){
@@ -62,7 +71,7 @@ public class WorkoutCLI {
     }
 
     public void showRoutines() {
-    List<Routine> routines = WorkoutController.getRoutines();  // Fetch from controller
+    List<Routine> routines = routineService.getAllRoutines();  // Fetch all routines
     if (routines.isEmpty()) {
         System.out.println("No routines found.");
     } else {
@@ -76,7 +85,7 @@ public class WorkoutCLI {
     public void showExercisesInRoutine() {
         showRoutines(); // Show available routines first
         int routineId = getRoutineId();
-        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        List<RoutineExercise> exercises = routineExerciseService.getExercisesInRoutine(routineId);
 
         if (exercises.isEmpty()) {
             System.out.println("No exercises found for this routine.");
@@ -95,7 +104,7 @@ public class WorkoutCLI {
     }
 
     public void showExercisesInRoutineById(int routineId) {
-        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        List<RoutineExercise> exercises = routineExerciseService.getExercisesInRoutine(routineId);
 
         if (exercises.isEmpty()) {
             System.out.println("No exercises found for this routine.");
@@ -112,7 +121,7 @@ public class WorkoutCLI {
     public void addExerciseToRoutine(){
         showRoutines();
         int routineId = getRoutineId();
-        List<Exercise> exercises = ExerciseDAO.getAllExercises();
+        List<Exercise> exercises = exerciseService.getAllExercises();
         if (exercises.isEmpty()){
             System.out.println("Pas d'exercises dans la base de données!");
         }
@@ -126,7 +135,7 @@ public class WorkoutCLI {
             }
         int exerciseId = getExerciseId();
         
-        if (WorkoutController.addExerciseToRoutine(routineId, exerciseId)){
+        if (routineExerciseService.addExerciseToRoutine(routineId, exerciseId)){
             System.out.println("Exercice ajouté!");
         }
         else {
@@ -141,7 +150,7 @@ public class WorkoutCLI {
         showExercisesInRoutineById(routineId);
         System.out.println("\nEntrez l'ID de la routine");
         int exerciseId = getExerciseId();
-        if (WorkoutController.removeExerciseFromRoutine(routineId, exerciseId)){
+        if (routineExerciseService.removeExerciseFromRoutine(routineId, exerciseId)){
             System.out.println("\n Exercice supprimé de la routine!");
         }
         else{
@@ -167,13 +176,13 @@ public class WorkoutCLI {
         int routineId = getRoutineId();
 
         System.out.println("\n===Démarrage de la séance===");
-        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        List<RoutineExercise> exercises = routineExerciseService.getExercisesInRoutine(routineId);
         for (RoutineExercise exercise : exercises){
             System.out.println("Exercise : " + exercise.getExercise().toString());
             double weight = getWeightInput();
             int duration = getDurationInput();
             int reps = getRepsInput();
-            WorkoutController.updateExerciseDetails(routineId, exercise.getId(), weight, duration, reps);
+            routineExerciseService.updateExerciseDetails(routineId, exercise.getId(), weight, duration, reps);
 
         }
     }

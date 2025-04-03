@@ -1,5 +1,7 @@
 package com.fittracker.model;
 
+import java.util.List;
+
 public class RoutineExercise {
     private int id;
     private Exercise exercise;
@@ -7,6 +9,8 @@ public class RoutineExercise {
     private int duration;
     private int reps;
 
+    public RoutineExercise() {}
+    
     public RoutineExercise(int id, Exercise exercise, double weight, int duration, int reps) {
         this.id = id;
         this.exercise = exercise;
@@ -20,6 +24,7 @@ public class RoutineExercise {
     public double getWeight() { return weight; }
     public int getDuration() { return duration; }
     public int getReps() { return reps; }
+
 
     @Override
     public String toString() {

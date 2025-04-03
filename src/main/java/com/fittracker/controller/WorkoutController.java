@@ -4,11 +4,15 @@ import java.util.Scanner;
 
 import com.fittracker.model.*;
 import com.fittracker.view.WorkoutCLI;
+import com.service.ExerciseService;
 
 public class WorkoutController {
+    private ExerciseService exerciseService = new ExerciseService();
 
-    public static List<Exercise> getAllExercises(){
-        return ExerciseDAO.getAllExercises();
+    private RoutineDAO routineDAO = new RoutineDAO();
+
+    public List<Exercise> getAllExercises(){
+        return exerciseService.getAllExercises();
     }
     public static boolean addRoutine(String name) {
        return RoutineDAO.addRoutine(name);
@@ -18,27 +22,27 @@ public class WorkoutController {
         return RoutineDAO.removeRoutine(routineId);
     }
 
-    public static List<Routine> getRoutines() {
-        return RoutineDAO.getAllRoutines();
+    public List<Routine> getRoutines() {
+        return routineDAO.getAllRoutines();
         
     }
 
 
-    public static List<RoutineExercise> getExercisesInRoutine(int routineId) {
-        return RoutineExerciseDAO.getRoutineExercisesById(routineId);
-    }
+    // public static List<RoutineExercise> getExercisesInRoutine(int routineId) {
+    //     return RoutineExerciseDAO.getRoutineExercisesById(routineId);
+    // }
 
-    public static boolean addExerciseToRoutine(int routineId, int exerciseId){
-        return RoutineExerciseDAO.addExerciseToRoutine(routineId, exerciseId);
-    }
+    // public static boolean addExerciseToRoutine(int routineId, int exerciseId){
+    //     return RoutineExerciseDAO.addExerciseToRoutine(routineId, exerciseId);
+    // }
     
-    public static boolean removeExerciseFromRoutine(int routineId, int exerciseId){
-        return RoutineExerciseDAO.removeExerciseFromRoutine(routineId, exerciseId);
-    }
+    // public static boolean removeExerciseFromRoutine(int routineId, int exerciseId){
+    //     return RoutineExerciseDAO.removeExerciseFromRoutine(routineId, exerciseId);
+    // }
 
-    public static boolean updateExerciseDetails(int routineId, int exerciseId, double weight, int duration, int reps){
-        return RoutineExerciseDAO.updateExerciseDetails(routineId, exerciseId, weight, duration, reps);
-    }
+    // public static boolean updateExerciseDetails(int routineId, int exerciseId, double weight, int duration, int reps){
+    //     return RoutineExerciseDAO.updateExerciseDetails(routineId, exerciseId, weight, duration, reps);
+    // }
 
 
 

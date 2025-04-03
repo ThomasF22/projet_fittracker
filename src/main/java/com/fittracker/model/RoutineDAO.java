@@ -6,7 +6,7 @@ import java.util.List;
 import com.fittracker.config.Database;
 
 public class RoutineDAO {
-    public static List<Routine> getAllRoutines() {
+    public List<Routine> getAllRoutines() {
         List<Routine> routines = new ArrayList<>();
         String sql = "SELECT id, name, dateCreated FROM routine";
 
@@ -22,6 +22,8 @@ public class RoutineDAO {
         }
         return routines;
     }
+
+    // TODO : getRoutineById
 
     public static boolean addRoutine(String name) {
         String sql = "INSERT INTO routine (name, dateCreated) VALUES (?, NOW())";

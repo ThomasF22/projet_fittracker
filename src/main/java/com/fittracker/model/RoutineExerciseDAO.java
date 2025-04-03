@@ -6,7 +6,7 @@ import java.util.List;
 import com.fittracker.config.Database;
 public class RoutineExerciseDAO {
 
-    public static List<RoutineExercise> getRoutineExercisesById(int routineId) {
+    public List<RoutineExercise> getRoutineExercisesById(int routineId) {
         List<RoutineExercise> exercises = new ArrayList<>();
         String sql = "SELECT e.name AS nom_exercise , e.id, re.weight, re.duration, re.reps " +
                      "FROM exercise e " +
@@ -36,7 +36,7 @@ public class RoutineExerciseDAO {
         return exercises;
     }
 
-    public static boolean updateExerciseDetails(int routineId, int exerciseId, Double weight, Integer duration, Integer reps) {
+    public boolean updateExerciseDetails(int routineId, int exerciseId, Double weight, Integer duration, Integer reps) {
         String sql = "UPDATE routine_ex SET weight = ?, duration = ?, reps = ? WHERE idRoutine = ? AND idExercise = ?";
     
         try (Connection conn = Database.getConnection();
@@ -56,7 +56,7 @@ public class RoutineExerciseDAO {
         return false;
     }
 
-    public static boolean addExerciseToRoutine(int routineId, int exerciseId) {
+    public boolean addExerciseToRoutine(int routineId, int exerciseId) {
         String sql = "INSERT INTO routine_ex (idRoutine, idExercise) VALUES (?, ?)";
 
         try (Connection conn = Database.getConnection();
@@ -72,7 +72,7 @@ public class RoutineExerciseDAO {
         return false;
     }
 
-    public static boolean removeExerciseFromRoutine(int routineId, int exerciseId){
+    public boolean removeExerciseFromRoutine(int routineId, int exerciseId){
         String sql = "DELETE FROM routine_ex WHERE routine_ex.idRoutine = ? AND routine_ex.idExercise = ?";
 
         try (Connection conn = Database.getConnection();

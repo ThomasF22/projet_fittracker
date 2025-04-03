@@ -1,9 +1,9 @@
 package com.fittracker.controller;
 
-import com.fittracker.model.Exercise;
-import com.fittracker.model.RoutineExercise;
-import com.fittracker.model.Routine;
-import com.fittracker.model.RoutineDAO;
+import com.fittracker.model.*;
+import com.service.ExerciseService;
+import com.service.RoutineExerciseService;
+import com.service.RoutineService;
 import com.fittracker.controller.WorkoutController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +36,12 @@ public class RoutineListController {
     private ObservableList<Routine> routineList;
     private ObservableList<RoutineExercise> exerciseList; 
 
+    private ExerciseService exerciseService = new ExerciseService();
+    private RoutineService routineService = new RoutineService();
+    private RoutineExerciseService routineExerciseService = new RoutineExerciseService();
+
+
+
     @FXML
     public void initialize() {
         loadRoutines();
@@ -45,7 +51,7 @@ public class RoutineListController {
     }
 
     private void loadRoutines() {
-        List<Routine> routines = RoutineDAO.getAllRoutines();
+        List<Routine> routines = routineService.getAllRoutines();
         routineList = FXCollections.observableArrayList(routines);
         routineListView.setItems(routineList);
     }
@@ -63,9 +69,11 @@ public class RoutineListController {
 
     // Load exercises for the selected routine
     private void loadExercises(Routine selectedRoutine) {
+        exerciseIdLabel.setText("");
+        exerciseNameLabel.setText("");
         // Sauvegarde de l'exercise avant MAJ de la liste
         RoutineExercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
-        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(selectedRoutine.getId());
+        List<RoutineExercise> exercises = routineExerciseService.getRoutineExercisesById(selectedRoutine.getId());
         exerciseList = FXCollections.observableArrayList(exercises);
         exerciseListView.setItems(exerciseList);
 
@@ -141,14 +149,14 @@ public class RoutineListController {
         Optional<ButtonType> result = confirmAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            WorkoutController.removeExerciseFromRoutine(selectedRoutine.getId(),selectedExercise.getId());
+            routineExerciseService.removeExerciseFromRoutine(selectedRoutine.getId(),selectedExercise.getId());
             loadExercises(routineListView.getSelectionModel().getSelectedItem()); // Refresh exercise list after deletion
         }
     }
 
     @FXML
     private void addExerciseToRoutine() {
-        List<Exercise> allExercises = WorkoutController.getAllExercises();
+        List<Exercise> allExercises = exerciseService.getAllExercises();
         
         ChoiceDialog<Exercise> dialog = new ChoiceDialog<>(null, allExercises);
         dialog.setTitle("Ajouter un Exercice");
@@ -160,7 +168,7 @@ public class RoutineListController {
             // Add the selected exercise to the current routine
             Routine selectedRoutine = routineListView.getSelectionModel().getSelectedItem();
             if (selectedRoutine != null) {
-                WorkoutController.addExerciseToRoutine(selectedRoutine.getId(), exercise.getId());
+                routineExerciseService.addExerciseToRoutine(selectedRoutine.getId(), exercise.getId());
                 loadExercises(selectedRoutine); // Refresh the exercise list after adding the new exercise
             }
         });
