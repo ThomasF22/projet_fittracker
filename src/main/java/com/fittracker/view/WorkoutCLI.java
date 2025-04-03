@@ -6,9 +6,9 @@ import com.fittracker.model.Exercise;
 import com.fittracker.model.ExerciseDAO;
 import com.fittracker.model.Routine;
 import com.fittracker.model.RoutineExercise;
-import com.service.ExerciseService;
-import com.service.RoutineExerciseService;
-import com.service.RoutineService;
+import com.fittracker.service.ExerciseService;
+import com.fittracker.service.RoutineExerciseService;
+import com.fittracker.service.RoutineService;
 
 public class WorkoutCLI {
     private ExerciseService exerciseService = new ExerciseService();

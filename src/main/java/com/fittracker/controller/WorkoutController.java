@@ -3,8 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.fittracker.model.*;
+import com.fittracker.service.ExerciseService;
 import com.fittracker.view.WorkoutCLI;
-import com.service.ExerciseService;
 
 public class WorkoutController {
     private ExerciseService exerciseService = new ExerciseService();

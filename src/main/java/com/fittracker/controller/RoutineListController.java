@@ -1,9 +1,9 @@
 package com.fittracker.controller;
 
 import com.fittracker.model.*;
-import com.service.ExerciseService;
-import com.service.RoutineExerciseService;
-import com.service.RoutineService;
+import com.fittracker.service.ExerciseService;
+import com.fittracker.service.RoutineExerciseService;
+import com.fittracker.service.RoutineService;
 import com.fittracker.controller.WorkoutController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
