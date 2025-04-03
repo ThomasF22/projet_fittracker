@@ -4,15 +4,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fittracker.view.MainController">
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fittracker.controller.MainController">
     <Text text="Workout Routine Manager" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
     
-    <Button text="Ajouter une routine" onAction="#goToAddRoutine" />
-    <Button text="Supprimer une routine" onAction="#goToDeleteRoutine" />
     <Button text="Voir les routines" onAction="#goToShowRoutines" />
-    <Button text="Voir les exercices d'une routine" onAction="#goToShowExercises" />
-    <Button text="Ajouter un exercice à une routine" onAction="#goToAddExercise" />
-    <Button text="Retirer un exercice d'une routine" onAction="#goToRemoveExercise" />
-    <Button text="Démarrer une séance" onAction="#goToWorkoutSession" />
+    <!-- <Button text="Ajouter un exercice à une routine" onAction="#goToAddExercise" /> -->
+    <!-- <Button text="Démarrer une séance" onAction="#goToWorkoutSession" /> -->
     <Button text="Quitter" onAction="#exitApp" />
 </VBox>

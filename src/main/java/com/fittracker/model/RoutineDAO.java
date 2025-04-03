@@ -8,7 +8,7 @@ import com.fittracker.config.Database;
 public class RoutineDAO {
     public static List<Routine> getAllRoutines() {
         List<Routine> routines = new ArrayList<>();
-        String sql = "SELECT * FROM routine";
+        String sql = "SELECT id, name, dateCreated FROM routine";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -55,56 +55,6 @@ public class RoutineDAO {
                 return false;
     }
 
-    public static boolean addExerciseToRoutine(int routineId, int exerciseId) {
-        String sql = "INSERT INTO routine_ex (idRoutine, idExercise) VALUES (?, ?)";
 
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, routineId);
-            stmt.setInt(2, exerciseId);
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static boolean removeExerciseFromRoutine(int routineId, int exerciseId){
-        String sql = "DELETE FROM routine_ex WHERE routine_ex.idRoutine = ? AND routine_ex.idExercise = ?";
-
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, routineId);
-            stmt.setInt(2, exerciseId);
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static boolean updateExerciseDetails(int routineId, int exerciseId, Double weight, Integer duration, Integer reps) {
-        String sql = "UPDATE routine_ex SET weight = ?, duration = ?, reps = ? WHERE idRoutine = ? AND idExercise = ?";
-    
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-    
-            stmt.setObject(1, weight);
-            stmt.setObject(2, duration);
-            stmt.setObject(3, reps);
-            stmt.setInt(4, routineId);
-            stmt.setInt(5, exerciseId);
-    
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
     
 }

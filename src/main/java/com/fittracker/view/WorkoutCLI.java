@@ -5,6 +5,7 @@ import com.fittracker.controller.WorkoutController;
 import com.fittracker.model.Exercise;
 import com.fittracker.model.ExerciseDAO;
 import com.fittracker.model.Routine;
+import com.fittracker.model.RoutineExercise;
 
 public class WorkoutCLI {
     private Scanner scanner;
@@ -75,15 +76,15 @@ public class WorkoutCLI {
     public void showExercisesInRoutine() {
         showRoutines(); // Show available routines first
         int routineId = getRoutineId();
-        List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
 
         if (exercises.isEmpty()) {
             System.out.println("No exercises found for this routine.");
         } else {
             System.out.println("\nExercises in Routine ID " + routineId + ":");
-            for (Exercise exercise : exercises) {
+            for (RoutineExercise exercise : exercises) {
                 System.out.println("\nID : " + exercise.getId() +
-                 " Nom : " + exercise.getName() +
+                 " Nom : " + exercise.getExercise().toString() +
                  " | Poids : " + exercise.getWeight() + 
                  " | Durée :  " + exercise.getDuration() +
                  " | Répétitions : " + exercise.getReps() +" | \n");
@@ -94,14 +95,14 @@ public class WorkoutCLI {
     }
 
     public void showExercisesInRoutineById(int routineId) {
-        List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
 
         if (exercises.isEmpty()) {
             System.out.println("No exercises found for this routine.");
         } else {
             System.out.println("\nExercises in Routine ID " + routineId + ":");
-            for (Exercise exercise : exercises) {
-                System.out.println("\nID : " + exercise.getId() + " Nom : " + exercise.getName());
+            for (RoutineExercise exercise : exercises) {
+                System.out.println("\nID : " + exercise.getId() + " Nom : " + exercise.getExercise().toString());
 
             }
         }
@@ -166,9 +167,9 @@ public class WorkoutCLI {
         int routineId = getRoutineId();
 
         System.out.println("\n===Démarrage de la séance===");
-        List<Exercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
-        for (Exercise exercise : exercises){
-            System.out.println("Exercise : " + exercise.getName());
+        List<RoutineExercise> exercises = WorkoutController.getExercisesInRoutine(routineId);
+        for (RoutineExercise exercise : exercises){
+            System.out.println("Exercise : " + exercise.getExercise().toString());
             double weight = getWeightInput();
             int duration = getDurationInput();
             int reps = getRepsInput();

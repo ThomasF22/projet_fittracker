@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox spacing="20" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.fittracker.controller.RoutineListController">
+
+    <!-- Left Side: List of Routines -->
+    <VBox spacing="10">
+        <Label text="Liste des Routines" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <ListView fx:id="routineListView" onMouseClicked="#handleRoutineSelection" />
+    </VBox>
+
+    <!-- Right Side: Routine Details -->
+    <VBox spacing="10">
+        <Label text="Détails de la Routine" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Label text="ID: " />
+        <Label fx:id="routineIdLabel" text="-" />
+        <Label text="Nom: " />
+        <Label fx:id="routineNameLabel" text="-" />
+        <Label text="Date de création: " />
+        <Label fx:id="routineDateLabel" text="-" />
+
+        <Button text="Supprimer la routine sélectionnée" onAction="#deleteRoutine" />
+        <Button text="Créer une nouvelle routine" onAction="#createRoutine" />
+
+        <!-- List of exercises for the selected routine -->
+        <Label text="Liste des Exercices" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <ListView fx:id="exerciseListView" onMouseClicked="#handleExerciseSelection" />
+        <Label text="Détails de l'exercice" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Label text="ID: " />
+        <Label fx:id="exerciseIdLabel" text="-" />
+        <Label text="Nom: " />
+        <Label fx:id="exerciseNameLabel" text="-" />
+
+
+        <Button text="Supprimer l'exercice sélectionné" onAction="#deleteExercise" />
+        <Button text="Ajouter un exercice" onAction="#addExerciseToRoutine" />
+    </VBox>
+
+</HBox>
