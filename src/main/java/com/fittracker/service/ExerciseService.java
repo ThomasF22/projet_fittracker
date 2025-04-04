@@ -13,4 +13,8 @@ public class ExerciseService {
     public List<Exercise> getAllExercises(){
         return exerciseDAO.getAllExercises();
     };
+
+    public boolean createExercise(String name, String description, int userId){
+        return exerciseDAO.createExercise(name,description,userId);
+    }
 }

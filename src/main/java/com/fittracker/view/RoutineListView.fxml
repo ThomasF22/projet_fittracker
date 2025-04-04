@@ -41,6 +41,7 @@
 
         <Button text="Supprimer l'exercice sélectionné" onAction="#deleteExercise" />
         <Button text="Ajouter un exercice" onAction="#addExerciseToRoutine" />
+        <Button text="Créer une nouvel exercice" onAction="#createExercise" />
     </VBox>
 
 </HBox>

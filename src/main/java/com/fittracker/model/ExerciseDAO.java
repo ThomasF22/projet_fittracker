@@ -44,6 +44,23 @@ public class ExerciseDAO {
         }
         return exercises;
     }
+    public boolean createExercise(String name, String description, int userId) {
+        String sql = "INSERT INTO exercise (name, description, creatorId) VALUES (?, ?, ?)";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, name);
+            stmt.setString(2, description);
+            stmt.setInt(3, userId);
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     // TODO : getExerciseById
 

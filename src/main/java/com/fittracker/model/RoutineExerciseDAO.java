@@ -41,7 +41,7 @@ public class RoutineExerciseDAO {
         String sql = "SELECT e.name AS nom_exercise , e.id, re.weight, re.duration, re.reps " +
                      "FROM exercise e " +
                      "JOIN routine_ex re ON e.id = re.idExercise " +
-                     "WHERE re.idRoutine = ? AND creatorId = 0 OR creatorId = ?";
+                     "WHERE re.idRoutine = ? AND creatorId = -1 OR creatorId = ?";
     
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

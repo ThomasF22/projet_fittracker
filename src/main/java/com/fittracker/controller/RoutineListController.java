@@ -33,6 +33,8 @@ public class RoutineListController {
     @FXML
     private Label routineIdLabel;
     @FXML
+    private Label routineNameLabel;
+    @FXML
     private Label routineDateLabel;
     @FXML
     private Label exerciseIdLabel;
@@ -69,6 +71,7 @@ public class RoutineListController {
         Routine selectedRoutine = routineListView.getSelectionModel().getSelectedItem();
         if (selectedRoutine != null) {
             routineIdLabel.setText(String.valueOf(selectedRoutine.getId()));
+            routineNameLabel.setText(String.valueOf(selectedRoutine.getName()));
             routineDateLabel.setText(selectedRoutine.getDateCreated().toString());
         
             loadExercises(selectedRoutine);
@@ -142,6 +145,36 @@ public class RoutineListController {
     }
 
     @FXML
+    private void createExercise() {
+        // Create a TextInputDialog to ask for exercise name
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Créer un Nouvel Exercice");
+        dialog.setHeaderText("Entrez le nom du nouvel exercice");
+        dialog.setContentText("Nom de l'exercise:");
+
+        // Get user input for the exercise name
+        Optional<String> nameResult = dialog.showAndWait();
+        String name = "";
+        if (nameResult.isPresent()) {
+            name = nameResult.get(); 
+        }
+
+        TextInputDialog descriptionDialog = new TextInputDialog();
+        descriptionDialog.setTitle("Créer un Nouvel Exercice");
+        descriptionDialog.setHeaderText("Entrez la description de l'exercice");
+        descriptionDialog.setContentText("Description :");
+
+        // Get user input for the exercise description
+        Optional<String> descriptionResult = dialog.showAndWait();
+        String description = "";
+        if (descriptionResult.isPresent()) {
+            description = descriptionResult.get(); 
+        }
+            exerciseService.createExercise(name, description, userId);
+            loadRoutines();
+    }
+
+    @FXML
     private void deleteExercise() {
         Routine selectedRoutine = routineListView.getSelectionModel().getSelectedItem();
         RoutineExercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
@@ -196,15 +229,12 @@ public class RoutineListController {
 
     private void openSessionWindow(Routine routine) {
     try {
-        System.out.println("\nTRYING opensessionwindow");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fittracker/view/WorkoutSessionView.fxml"));
         Parent root = loader.load();
-        System.out.println("\nLOADED fxml");
 
-        // Passer la routine au contrôleur de la session
+        // Pass the routine to the workout session controller
         WorkoutSessionController controller = loader.getController();
         controller.setRoutine(routine);
-        System.out.println("\n PASSED routine to controller");
 
         Stage stage = new Stage();
         stage.setTitle("Séance - " + routine.getName());

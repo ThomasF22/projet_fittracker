@@ -40,24 +40,25 @@ public class WorkoutSessionController {
     private RoutineExerciseService routineExerciseService = new RoutineExerciseService();
 
     // Loads a routine and it's exercises
+    // (takes the routine that was passed)
     public void setRoutine(Routine routine) {
-        System.out.println("\n SETTING ROUTINE");
-
         this.routine = routine;
         loadExercises();
     }
 
-    // Fetches exercises, populates a corresponding observablelist
-    // initiates cell factories for each exercise field
+
     private void loadExercises() {
-        System.out.println("\n LOADING EXERCISES");
+        // Fetches exercises, populates a corresponding observablelist
         routineExercises = routineExerciseDAO.getRoutineExercisesById(routine.getId());
         ObservableList<RoutineExercise> exerciseList = FXCollections.observableArrayList(routineExercises);
     
         exerciseColumn.setCellValueFactory(new PropertyValueFactory<>("exerciseName"));
     
         // Mise à jour de la colonne "weight"
+        // sets how column cell is rendered
+        // RoutineExercise is the TableView's type, TextField is the cell's type
         weightColumn.setCellFactory(col -> new TableCell<RoutineExercise, TextField>() {
+            // text where editable value will be displayed
             private final TextField textField = new TextField();
             
             @Override
