@@ -13,4 +13,12 @@ public class RoutineService {
     public List<Routine> getAllRoutines(){
         return routineDAO.getAllRoutines();
     }
+
+    public List<Routine> getUserRoutines(int userId){
+        return routineDAO.getUserRoutines(userId);
+    }
+
+    public boolean addRoutine(String name, int userId){
+        return routineDAO.addRoutine(name, userId);
+    }
 }

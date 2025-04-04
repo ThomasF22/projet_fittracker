@@ -1,4 +1,4 @@
-package com.fittracker.model;
+package com.fittracker.test.java.com.fittracker.model;
 
 import com.fittracker.model.Exercise;
 

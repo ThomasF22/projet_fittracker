@@ -4,6 +4,7 @@ import com.fittracker.model.*;
 import com.fittracker.service.ExerciseService;
 import com.fittracker.service.RoutineExerciseService;
 import com.fittracker.service.RoutineService;
+import com.fittracker.util.SessionManager;
 import com.fittracker.controller.WorkoutController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class RoutineListController {
+
+    private int userId = SessionManager.getLoggedInUserId();
 
     @FXML
     private ListView<Routine> routineListView;
@@ -51,7 +54,7 @@ public class RoutineListController {
     }
 
     private void loadRoutines() {
-        List<Routine> routines = routineService.getAllRoutines();
+        List<Routine> routines = routineService.getUserRoutines(userId);
         routineList = FXCollections.observableArrayList(routines);
         routineListView.setItems(routineList);
     }
@@ -71,13 +74,14 @@ public class RoutineListController {
     private void loadExercises(Routine selectedRoutine) {
         exerciseIdLabel.setText("");
         exerciseNameLabel.setText("");
-        // Sauvegarde de l'exercise avant MAJ de la liste
+        // Saving the exercise before updating the list 
         RoutineExercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
-        List<RoutineExercise> exercises = routineExerciseService.getRoutineExercisesById(selectedRoutine.getId());
+        // Fetching exercise for user's selected routine
+        List<RoutineExercise> exercises = routineExerciseService.getRoutineExercisesForUser(selectedRoutine.getId(), userId);
         exerciseList = FXCollections.observableArrayList(exercises);
         exerciseListView.setItems(exerciseList);
 
-        // Restauration de l'exercise après MAJ de la liste
+        // Reselects the exercise if it's already in the list
         if (selectedExercise != null && exercises.contains(selectedExercise)) {
             exerciseListView.getSelectionModel().select(selectedExercise);
         }
@@ -127,7 +131,7 @@ public class RoutineListController {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             // Add the new routine to the database
-            RoutineDAO.addRoutine(name);
+            routineService.addRoutine(name, userId);
             loadRoutines(); // Refresh the list after adding the new routine
         });
     }

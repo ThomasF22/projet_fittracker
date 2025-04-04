@@ -31,7 +31,7 @@ public class User {
         return this.username;
     }
 
-    // public String getUserPassword(){
-    //     return this.password;
-    // }
+    public String getUserPassword(){
+        return this.password;
+    }
 }

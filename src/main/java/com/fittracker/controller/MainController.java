@@ -39,6 +39,21 @@ public class MainController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void openLoginWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/fittracker/view/LoginView.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Connexion");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
  
     @FXML

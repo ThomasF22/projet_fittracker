@@ -13,6 +13,9 @@ public class RoutineExerciseService {
     public List<RoutineExercise> getRoutineExercisesById(int routineId){
         return routineExerciseDAO.getRoutineExercisesById(routineId);
     }
+    public List<RoutineExercise> getRoutineExercisesForUser(int routineId, int userId){
+        return routineExerciseDAO.getRoutineExercisesForUser(routineId, userId);
+    }
 
     public List<RoutineExercise> getExercisesInRoutine(int routineId) {
         return routineExerciseDAO.getRoutineExercisesById(routineId);
