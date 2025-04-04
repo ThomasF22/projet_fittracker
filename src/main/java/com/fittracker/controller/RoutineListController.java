@@ -5,7 +5,6 @@ import com.fittracker.service.ExerciseService;
 import com.fittracker.service.RoutineExerciseService;
 import com.fittracker.service.RoutineService;
 import com.fittracker.util.SessionManager;
-import com.fittracker.controller.WorkoutController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -122,7 +121,7 @@ public class RoutineListController {
         Optional<ButtonType> result = confirmAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            RoutineDAO.removeRoutine(selectedRoutine.getId());
+            routineService.removeRoutine(selectedRoutine.getId());
             loadRoutines(); // Refresh list after deletion
         }
     }

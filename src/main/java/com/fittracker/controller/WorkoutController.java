@@ -14,12 +14,12 @@ public class WorkoutController {
     public List<Exercise> getAllExercises(){
         return exerciseService.getAllExercises();
     }
-    public static boolean addRoutine(String name) {
-       return RoutineDAO.addRoutine(name);
+    public boolean addRoutine(String name, int userId) {
+       return routineDAO.addRoutine(name, userId);
     }
 
-    public static boolean removeRoutine(int routineId){
-        return RoutineDAO.removeRoutine(routineId);
+    public boolean removeRoutine(int routineId){
+        return routineDAO.removeRoutine(routineId);
     }
 
     public List<Routine> getRoutines() {

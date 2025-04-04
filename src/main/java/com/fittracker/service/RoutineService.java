@@ -21,4 +21,8 @@ public class RoutineService {
     public boolean addRoutine(String name, int userId){
         return routineDAO.addRoutine(name, userId);
     }
+
+    public boolean removeRoutine(int userId){
+        return routineDAO.removeRoutine(userId);
+    }
 }

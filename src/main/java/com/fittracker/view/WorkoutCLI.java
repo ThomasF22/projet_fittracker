@@ -11,6 +11,7 @@ import com.fittracker.service.RoutineExerciseService;
 import com.fittracker.service.RoutineService;
 
 public class WorkoutCLI {
+    private WorkoutController workoutController = new WorkoutController();
     private ExerciseService exerciseService = new ExerciseService();
     private RoutineService routineService = new RoutineService();
     private RoutineExerciseService routineExerciseService = new RoutineExerciseService();
@@ -27,7 +28,7 @@ public class WorkoutCLI {
         while (true) {
             int choice = showMenu();
             switch (choice) {
-                case 1 -> addRoutine();
+                // case 1 -> addRoutine();
                 case 2 -> deleteRoutine(); 
                 case 3 -> showRoutines();
                 case 4 -> showExercisesInRoutine();
@@ -58,17 +59,17 @@ public class WorkoutCLI {
         return scanner.nextInt();
     }
 
-    public void addRoutine(){
-        System.out.println("Entrez le nom de la Routine:");
-        String routineName = getRoutineName();
-        if(WorkoutController.addRoutine(routineName)){
-            System.out.println("Routine ajoutée!");
-        }
-        else{
-            System.out.println("Erreur, routine pas ajoutée!");
-        }; 
+    // public void addRoutine(){
+    //     System.out.println("Entrez le nom de la Routine:");
+    //     String routineName = getRoutineName();
+    //     if(workoutController.addRoutine(routineName,userId)){
+    //         System.out.println("Routine ajoutée!");
+    //     }
+    //     else{
+    //         System.out.println("Erreur, routine pas ajoutée!");
+    //     }; 
 
-    }
+    // }
 
     public void showRoutines() {
     List<Routine> routines = routineService.getAllRoutines();  // Fetch all routines
@@ -162,7 +163,7 @@ public class WorkoutCLI {
         showRoutines();
         int routineId = getRoutineId();
         
-        boolean success = WorkoutController.removeRoutine(routineId);
+        boolean success = workoutController.removeRoutine(routineId);
         if (success) {
             System.out.println("Routine removed successfully!");
         } else {

@@ -60,7 +60,7 @@ public class RoutineDAO {
         return false;
     }
 
-    public static boolean removeRoutine(int routineId) {
+    public boolean removeRoutine(int routineId) {
         String sql = "DELETE FROM routine WHERE routine.id = ?";
 
         try (Connection conn = Database.getConnection();
