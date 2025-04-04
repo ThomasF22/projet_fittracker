@@ -9,13 +9,18 @@ import com.fittracker.controller.WorkoutController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 import javafx.scene.control.ChoiceDialog;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -177,6 +182,39 @@ public class RoutineListController {
             }
         });
     }
+
+    @FXML
+    private void handleStartWorkout() {
+        Routine selectedRoutine = routineListView.getSelectionModel().getSelectedItem();
+        if (selectedRoutine != null) {
+            openSessionWindow(selectedRoutine);
+        } else {
+            System.out.println("Veuillez sélectionner une routine.");
+        }
+    }
+
+
+    private void openSessionWindow(Routine routine) {
+    try {
+        System.out.println("\nTRYING opensessionwindow");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fittracker/view/WorkoutSessionView.fxml"));
+        Parent root = loader.load();
+        System.out.println("\nLOADED fxml");
+
+        // Passer la routine au contrôleur de la session
+        WorkoutSessionController controller = loader.getController();
+        controller.setRoutine(routine);
+        System.out.println("\n PASSED routine to controller");
+
+        Stage stage = new Stage();
+        stage.setTitle("Séance - " + routine.getName());
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);

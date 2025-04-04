@@ -21,9 +21,17 @@ public class RoutineExercise {
 
     public int getId() { return id; }
     public Exercise getExercise() { return exercise; }
+    public String getExerciseName() { return this.exercise.getName();}
+    public int getExerciseId() { return this.exercise.getId();}
     public double getWeight() { return weight; }
     public int getDuration() { return duration; }
     public int getReps() { return reps; }
+
+    public void setWeight(double weight) { this.weight = weight;}
+    public void setReps(int reps) { this.reps = reps;}
+
+    public void setDuration(int duration) { this.duration = duration;}
+
 
 
     @Override
